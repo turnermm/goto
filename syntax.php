@@ -45,19 +45,16 @@
     			}
      
     			function render($mode, Doku_Renderer $renderer, $data) {
-                    global $ACT;
-    				if (substr($data[0],0,7) == "http://") {
-						$message = str_replace("%d",$renderer->internallink($data[0], $data[0],'', true),$data[2]);
-						$message = str_replace("%s",$data[1],$message);
-						$renderer->doc .= $message;
-						if ($ACT != 'preview')
-						    $renderer->doc .= '<script>url="'.wl($data[0]).'";setTimeout("location.href=url",'.($data[1]*1000).');</script>';
-    				} else {
-						$message = str_replace("%d", "<a href=\"".$data[0]."\">".$data[0]."</a>",$data[2]);
-						$message = str_replace("%s", $data[1],$message);
-						$renderer->doc .= $message;
-						if ($ACT != 'preview')
-						    $renderer->doc .= '<script>url="'.$data[0].'";setTimeout("location.href=url",'.($data[1]*1000).');</script>';
-                    }
+                    		global $ACT;
+				$message = str_replace("%d",$renderer->internallink($data[0], $data[0],'', true),$data[2]);
+				$message = str_replace("%s",$data[1],$message);
+				$renderer->doc .= $message;
+				$urlArr = explode('#', $data[0], 2);
+				$url = wl($urlArr[0]);
+				if (count($urlArr) > 1) {
+					$url .= '#'.$urlArr[1];
+				}
+				if ($ACT != 'preview')
+					$renderer->doc .= '<script>url="'.$url.'";setTimeout("location.href=url",'.($data[1]*1000).');</script>';
     			}
     		}
