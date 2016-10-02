@@ -6,4 +6,3 @@ french language file
 %s will be replaced with the number of seconds before redirect.
  */
 $lang['redirect']="Vous allez être redirigé vers la page %d dans approximativement %s secondes";
-?>
