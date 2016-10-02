@@ -37,17 +37,27 @@
     				$matches = explode("?", substr($match,7,-2));
     				if (is_numeric($matches[1])){ $seconds = $matches[1]; }
     				if ($seconds < $minSeconds){ $seconds = $minSeconds; }//Check that seconds is greater than $minSeconds.
-    				resolve_pageid(getNS($ID), $matches[0], $exists);
+    				if (substr($matches[0],0,7) == "http://")
+                        resolve_pageid(getNS($ID), $matches[0], $exists);
     				$message = str_replace("%D","%d",$message);//Make %d case insensitive.
     				$message = str_replace("%S","%s",$message);//Make %s case insensitive.
     				return array($matches[0], $seconds, $message);
     			}
      
     			function render($mode, Doku_Renderer $renderer, $data) {
-    				$message = str_replace("%d",$renderer->internallink($data[0], $data[0],'', true),$data[2]);
-    				$message = str_replace("%s",$data[1],$message);
-    				$renderer->doc .= $message;
-    				$renderer->doc .= '<script>url="'.wl($data[0]).'";setTimeout("location.href=url",'.($data[1]*1000).');</script>';
+                    global $ACT;
+    				if (substr($data[0],0,7) == "http://") {
+						$message = str_replace("%d",$renderer->internallink($data[0], $data[0],'', true),$data[2]);
+						$message = str_replace("%s",$data[1],$message);
+						$renderer->doc .= $message;
+						if ($ACT != 'preview')
+						    $renderer->doc .= '<script>url="'.wl($data[0]).'";setTimeout("location.href=url",'.($data[1]*1000).');</script>';
+    				} else {
+						$message = str_replace("%d", "<a href=\"".$data[0]."\">".$data[0]."</a>",$data[2]);
+						$message = str_replace("%s", $data[1],$message);
+						$renderer->doc .= $message;
+						if ($ACT != 'preview')
+						    $renderer->doc .= '<script>url="'.$data[0].'";setTimeout("location.href=url",'.($data[1]*1000).');</script>';
+                    }
     			}
-     
     		}
