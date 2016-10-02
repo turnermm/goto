@@ -6,4 +6,3 @@ German language file
 %s wird durch die Dauer in Sekunden bis zur Umleitung ersetzt.
  */
 $lang['redirect']="Die Umleitung zur Seite %d erfolgt in ungefähr %s Sekunden.";
-?>
