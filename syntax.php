@@ -24,14 +24,14 @@
     				return 249;
     			}
      
-    			function handle($match, $state, $pos, &$handler){
+    			function handle($match, $state, $pos, Doku_Handler $handler){
      
     				$seconds = 10;        //Default number of seconds to wait before redirect.
     				$minSeconds = 3;      //Minimum number of seconds allowed before redirect.
      
     				/* $message is the redirection message that is displayed. %d will be replaced with a link
     				*  to the destination. %s will be replaced with the number of seconds before redirect. */
-    				$message = "<strong>You will be redirected to %d in approximately %s seconds.</strong>";
+    				$message = "<strong>".$this->getLang('redirect')."</strong>";
      
     				global $ID;
     				$matches = explode("?", substr($match,7,-2));
@@ -43,7 +43,7 @@
     				return array($matches[0], $seconds, $message);
     			}
      
-    			function render($format, &$renderer, $data) {
+    			function render($mode, Doku_Renderer $renderer, $data) {
     				$message = str_replace("%d",$renderer->internallink($data[0], $data[0],'', true),$data[2]);
     				$message = str_replace("%s",$data[1],$message);
     				$renderer->doc .= $message;
