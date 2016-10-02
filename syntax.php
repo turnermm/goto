@@ -26,8 +26,8 @@
      
     			function handle($match, $state, $pos, Doku_Handler $handler){
      
-    				$seconds = 10;        //Default number of seconds to wait before redirect.
-    				$minSeconds = 3;      //Minimum number of seconds allowed before redirect.
+    				$seconds = $this->getConf('seconds');        //Default number of seconds to wait before redirect.
+    				$minSeconds = $this->getConf('minSeconds');      //Minimum number of seconds allowed before redirect.
      
     				/* $message is the redirection message that is displayed. %d will be replaced with a link
     				*  to the destination. %s will be replaced with the number of seconds before redirect. */
