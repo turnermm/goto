@@ -5,5 +5,5 @@
  * @author cziehr <info@einsatzleiterwiki.de>
  */
 
-$conf['seconds']       = 10;
-$conf['minSeconds']    = 3;
+$conf['seconds']       = 3;
+$conf['minSeconds']    = 2;
