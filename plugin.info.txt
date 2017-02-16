@@ -1,7 +1,7 @@
 base goto
 author Allen Ormond
 email aormond@gmail.com
-date 2016-10-02
+date 2017-02-16
 name GOTO
 desc Easily redirect to other pages in your wiki.
 url https://www.dokuwiki.org/plugin:goto
