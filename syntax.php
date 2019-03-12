@@ -37,8 +37,6 @@ class  syntax_plugin_goto extends DokuWiki_Syntax_Plugin {
 				$matches = explode("?", substr($match,7,-2));
 				if (is_numeric($matches[1])){ $seconds = $matches[1]; }
 				if ($seconds < $minSeconds){ $seconds = $minSeconds; }//Check that seconds is greater than $minSeconds.
-				if (substr($matches[0],0,7) == "http://")
-					resolve_pageid(getNS($ID), $matches[0], $exists);
 				$message = str_replace("%D","%d",$message);//Make %d case insensitive.
 				$message = str_replace("%S","%s",$message);//Make %s case insensitive.
 				return array($matches[0], $seconds, $message);
