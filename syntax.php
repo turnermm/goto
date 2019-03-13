@@ -38,6 +38,7 @@ class  syntax_plugin_goto extends DokuWiki_Syntax_Plugin {
                 if($matches[0] == 'user') {
                     $matches[0] = ": $userid";
                     $is_usr = true;
+					$seconds = 1;
                 }   
 				if (is_numeric($matches[1])){ $seconds = $matches[1]; }
 				if ($seconds < $minSeconds){ $seconds = $minSeconds; }//Check that seconds is greater than $minSeconds.
@@ -62,8 +63,10 @@ class  syntax_plugin_goto extends DokuWiki_Syntax_Plugin {
                     if(!$data[3]) {
 				        $renderer->doc .= '<script>url="'.$url.'";setTimeout("location.href=url",'.($data[1]*1000).');</script>';
                     }
-				    $tm =($data[1]*1000);
-			        $renderer->doc .= "<script>var goto_tm= setTimeout(function(){goto_redirect('$url');},$tm);</script>";
+					else{
+				        $tm =($data[1]*1000);						
+			            $renderer->doc .= "<script>var goto_tm= setTimeout(function(){goto_redirect('$url');},$tm);</script>";
+					}
 				}
 
 			}

@@ -21,3 +21,14 @@ function setGotoCookie(cname, cvalue) {
     var expires = "expires="+ d.toUTCString();
     document.cookie = cname + "=" + cvalue + ";" + expires + ";path="+DOKU_BASE;    
 }
+
+jQuery( document ).ready(function() {
+	
+	  var which = goto_getCookie("GOTO_LOGIN");      
+  
+      if(!which) {
+          return;
+      }   
+	    location.href = DOKU_BASE + 'doku.php?id=' + decodeURIComponent(which) ;
+	   setGotoCookie("GOTO_LOGIN", "") ;
+});
