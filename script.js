@@ -1,14 +1,11 @@
-
-
 function goto_redirect(which) {
-
-	 var user = goto_getCookie("TestCookie");      
+	 var user = goto_getCookie("DOKU_GOTO");      
       if(!user) {
           return;
       }   	 
    	clearTimeout(goto_tm);
       location.href = which;
-     setGotoCookie("TestCookie", "") ;
+     setGotoCookie("DOKU_GOTO", "") ;
      
  
 }

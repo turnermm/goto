@@ -25,42 +25,45 @@ class  syntax_plugin_goto extends DokuWiki_Syntax_Plugin {
 			}
 
 			function handle($match, $state, $pos, Doku_Handler $handler){
-                 global $INPUT,$USERINFO;
+                 global $INPUT;
 				 $userid = $INPUT->server->str('REMOTE_USER');
-			//	 msg(print_r($USERINFO,1));
-				// msg($userid,1);
+                 $is_usr = false;
 				$seconds = $this->getConf('seconds');        //Default number of seconds to wait before redirect.
 				$minSeconds = $this->getConf('minSeconds');      //Minimum number of seconds allowed before redirect.
 
 				/* $message is the redirection message that is displayed. %d will be replaced with a link
 				*  to the destination. %s will be replaced with the number of seconds before redirect. */
-				$message = "<strong>".$this->getLang('redirect')."</strong>";
-
-				global $ID;
+				$message = "<strong>".$this->getLang('redirect')."</strong>";				
 				$matches = explode("?", substr($match,7,-2));
-                if($matches[0] == 'user') $matches[0] = ": $userid";
+                if($matches[0] == 'user') {
+                    $matches[0] = ": $userid";
+                    $is_usr = true;
+                }   
 				if (is_numeric($matches[1])){ $seconds = $matches[1]; }
 				if ($seconds < $minSeconds){ $seconds = $minSeconds; }//Check that seconds is greater than $minSeconds.
 				$message = str_replace("%D","%d",$message);//Make %d case insensitive.
 				$message = str_replace("%S","%s",$message);//Make %s case insensitive.
-				return array($matches[0], $seconds, $message,0);
+				return array($matches[0], $seconds, $message,$is_usr);
 			}
 
 			function render($mode, Doku_Renderer $renderer, $data) {
 				global $ACT;
-				$message = str_replace("%d",$renderer->internallink($data[0], $data[0],'', true),$data[2]);
-				$message = str_replace("%s",$data[1],$message);
-				$renderer->doc .= $message;
+                if(!$data[3]) {
+                    $message = str_replace("%d",$renderer->internallink($data[0], $data[0],'', true),$data[2]);
+                    $message = str_replace("%s",$data[1],$message);
+                    $renderer->doc .= $message;
+                }
 				$urlArr = explode('#', $data[0], 2);
 				$url = wl($urlArr[0]);
 				if (count($urlArr) > 1) {
 					$url .= '#'.$urlArr[1];
-				}
-                msg($url);
+				}            
 				if ($ACT != 'preview') {
-				//	$renderer->doc .= '<script>url="'.$url.'";setTimeout("location.href=url",'.($data[1]*1000).');</script>';
-				$tm =($data[1]*1000);
-			    $renderer->doc .= "<script>var goto_tm= setTimeout(function(){goto_redirect('$url');},$tm);</script>";
+                    if(!$data[3]) {
+				        $renderer->doc .= '<script>url="'.$url.'";setTimeout("location.href=url",'.($data[1]*1000).');</script>';
+                    }
+				    $tm =($data[1]*1000);
+			        $renderer->doc .= "<script>var goto_tm= setTimeout(function(){goto_redirect('$url');},$tm);</script>";
 				}
 
 			}
