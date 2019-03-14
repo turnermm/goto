@@ -3,9 +3,9 @@ function goto_redirect(which) {
       if(!user) {
           return;
       }   	 
-   	clearTimeout(goto_tm);
+      clearTimeout(goto_tm);
       location.href = which;
-     setGotoCookie("DOKU_GOTO", "") ;
+      setGotoCookie("DOKU_GOTO", "") ;
      
  
 }
