@@ -8,12 +8,20 @@ class action_plugin_goto extends DokuWiki_Action_Plugin {
     }
 	function handle_login(Doku_Event $event, $param) {   
 	    global $conf;
-		$auto_login = 0;
+		$auto_login = $this->getConf('auto_login');
         if(!empty($event->data['user'])) {
 			if($auto_login) {
-			 $value = ':' . $event->data['user'] . ':'  .  $conf['start'] ;			
-			 setcookie("GOTO_LOGIN", $value, time()+120, DOKU_BASE);
-			 return;
+               $option  = $this->getConf('auto_options');
+               $user = $event->data['user']; 
+               $common = $this->getConf('common_ns');
+               if($common) {
+                   $common = rtrim($common,':');    
+               }               
+               $srch = array('common_ns','user_page','user_ns','start_page');               
+               $repl = array($common,$user,$user,$conf['start']);
+               $value = str_replace($srch,$repl,$option);             						
+			   setcookie("GOTO_LOGIN", $value, time()+120, DOKU_BASE);
+			   return;
 			}
 			else {
 				setcookie("DOKU_GOTO", $event->data['user'], time()+120, DOKU_BASE);

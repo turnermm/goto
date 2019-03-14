@@ -8,5 +8,5 @@
 $meta['seconds']       = array('numeric', '_pattern' => '/[0-9]+/');
 $meta['minSeconds']    = array('numeric', '_pattern' => '/[0-9]+/');
 $meta['auto_login'] = array('onoff');
-$meta['auto_options'] = array('multichoice','_choices'=>array(':user_page',':common_ns:user_page',':user_ns:user_page',':user_ns:start_page'));
+$meta['auto_options'] = array('multichoice','_choices'=>array(':user_page',':user_ns:user_page',':user_ns:start_page',':common_ns:user_page'));
 $meta['common_ns'] = array('string');
