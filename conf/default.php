@@ -3,6 +3,7 @@
  * Options for the GOTO plugin
  *
  * @author cziehr <info@einsatzleiterwiki.de>
+  *@author    Myron Turner <turnermm02@shaw.ca> 
  */
 
 $conf['seconds']       = 3;

@@ -1,4 +1,11 @@
-function goto_redirect(which) {
+/*
+ *@author    Myron Turner <turnermm02@shaw.ca> 
+*/
+function goto_redirect(which,extern) { 
+     if(extern == 'extern') {
+         location.href = which;
+         return;
+     }
 	 var user = goto_getCookie("DOKU_GOTO");      
       if(!user) {
           return;

@@ -3,6 +3,7 @@
  * Options for the goto plugin
  *
  * @author cziehr <info@einsatzleiterwiki.de>
+  *@author    Myron Turner <turnermm02@shaw.ca> 
  */
 
 $meta['seconds']       = array('numeric', '_pattern' => '/[0-9]+/');
