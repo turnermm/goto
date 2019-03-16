@@ -1,8 +1,9 @@
 /*
  *@author    Myron Turner <turnermm02@shaw.ca> 
 */
-function goto_redirect(which,extern) { 
-     if(extern == 'extern') {
+function goto_redirect(which,mode) { 
+
+     if(mode == 'extern') {
          location.href = which;
          return;
      }
@@ -11,6 +12,9 @@ function goto_redirect(which,extern) {
           return;
       }   	 
       clearTimeout(goto_tm);
+      if(mode == 'user')  {        
+       which = which.replace(/user/, user);
+      }
       location.href = which;
       setGotoCookie("DOKU_GOTO", "") ;
      

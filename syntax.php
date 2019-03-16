@@ -38,8 +38,8 @@ class  syntax_plugin_goto extends DokuWiki_Syntax_Plugin {
 				$message = "<strong>".$this->getLang('redirect')."</strong>";				
 				$matches = explode("?", substr($match,7,-2));
                 if($matches[0] == 'user') {
-                    $matches[0] = ": $userid";
-                    $is_usr = true;
+                   $matches[0] = "user";  // wildcard replaced in javascript   goto_redirect()
+                    $is_usr = 'user';
 					$seconds = 1;
                 }  
                 else if (preg_match("#^\s*https?:\/\/#",$matches[0])) {
@@ -88,7 +88,8 @@ class  syntax_plugin_goto extends DokuWiki_Syntax_Plugin {
                     }
 					else{
 				        $tm =($data[1]*1000);	                                            
-			            $renderer->doc .= "<script>var goto_tm= setTimeout(function(){goto_redirect('$url','$data[4]');},$tm);</script>";
+                        if($data[3] == 'user') $data[4] = 'user';
+			            $renderer->doc .= "<script>var goto_tm= setTimeout(function(){goto_redirect('$url', '$data[4]');},$tm);</script>";
 					}
 				}
                  return true; 
