@@ -15,8 +15,8 @@ class action_plugin_goto extends DokuWiki_Action_Plugin {
 		$auto_login = $this->getConf('auto_login');
         if(!empty($event->data['user'])) {
 			if($auto_login) {
+		       $user = $event->data['user']; 
                $option  = $this->getConf('auto_options');
-               $user = $event->data['user']; 
                $common = $this->getConf('common_ns');
                if($common) {
                    $common = rtrim($common,':');    

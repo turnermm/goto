@@ -11,5 +11,8 @@ $conf['minSeconds']    = 2;
 $conf['auto_login']    = 0;
 $conf['auto_options'] = ':user_page';
 $conf['common_ns'] = "";
+$conf['group'] = "";
+$conf['group_options'] = 'start_page';
+
 
 
