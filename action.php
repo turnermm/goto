@@ -20,8 +20,9 @@ class action_plugin_goto extends DokuWiki_Action_Plugin {
 	    $user = $_SERVER['REMOTE_USER'];
 		if(!$user) return;
 		$auto_login = $this->getConf('auto_login');   
+        $users_only = $this->getConf('user_only');
 		$redirect_target = "";
-		if($auto_login) {			   
+		if($auto_login && ! $users_only) {			   
 			$user_grps = $USERINFO['grps'];		
 			$groups = $this->getConf('group');
 			$groups = preg_replace("/\s+/","",$groups);
@@ -40,7 +41,8 @@ class action_plugin_goto extends DokuWiki_Action_Plugin {
 			}			
 		}			
 		//msg($redirect_target);	
-		
+		$groups_only = $this->getConf('group_only');
+        if($groups_only)  return;
 		if($auto_login) {		       
 		   $option  = $this->getConf('auto_options');
 		   $common = $this->getConf('common_ns');
