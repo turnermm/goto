@@ -13,7 +13,4 @@ $conf['auto_options'] = ':user_page';
 $conf['common_ns'] = "";
 $conf['group'] = "";
 $conf['group_options'] = 'start_page';
-$conf['group_only'] = 0;
-$conf['user_only'] = 0;
-
-
+$conf['only_option'] = 'default';

@@ -17,12 +17,24 @@ class action_plugin_goto extends DokuWiki_Action_Plugin {
 		 if($act != 'login') {
 				return;
 		}
+		$auto_login = $this->getConf('auto_login');	
+        if(!$auto_login) return;	
 	    $user = $_SERVER['REMOTE_USER'];
 		if(!$user) return;
-		$auto_login = $this->getConf('auto_login');   
-        $users_only = $this->getConf('user_only');
+
+        $which_only = $this->getConf('only_option');		
+		if($which_only == 'default') {
+		    $users_only = false;
+		    $groups_only = false;
+		}	
+		else if($which_only == 'group') {
+			$groups_only = true;
+		}
+		else  {
+			$users_only = true;
+		}
 		$redirect_target = "";
-		if($auto_login && ! $users_only) {			   
+		if(! $users_only) {			   
 			$user_grps = $USERINFO['grps'];		
 			$groups = $this->getConf('group');
 			$groups = preg_replace("/\s+/","",$groups);
@@ -40,10 +52,10 @@ class action_plugin_goto extends DokuWiki_Action_Plugin {
                 return;				
 			}			
 		}			
-		//msg($redirect_target);	
-		$groups_only = $this->getConf('group_only');
+			
+		//$groups_only = $this->getConf('group_only');
         if($groups_only)  return;
-		if($auto_login) {		       
+	       
 		   $option  = $this->getConf('auto_options');
 		   $common = $this->getConf('common_ns');
 		   if($common) {
@@ -53,33 +65,6 @@ class action_plugin_goto extends DokuWiki_Action_Plugin {
 		   $repl = array($common,$user,$user,$conf['start']);
 		   $value = str_replace($srch,$repl,$option); 
 		   setcookie("GOTO_LOGIN", $value, time()+120, DOKU_BASE);
-		   return;
-		}
-		else {
-			setcookie("DOKU_GOTO", $event->data['user'], time()+120, DOKU_BASE);
 		}
 		
-    }
-	function handle_login(Doku_Event $event, $param) {   
-	    global $conf;
-		$auto_login = $this->getConf('auto_login');
-        if(!empty($event->data['user'])) {
-			if($auto_login) {
-		       $user = $event->data['user']; 
-               $option  = $this->getConf('auto_options');
-               $common = $this->getConf('common_ns');
-               if($common) {
-                   $common = rtrim($common,':');    
-               }               
-               $srch = array('common_ns','user_page','user_ns','start_page');               
-               $repl = array($common,$user,$user,$conf['start']);
-               $value = str_replace($srch,$repl,$option);             						
-			   setcookie("GOTO_LOGIN", $value, time()+120, DOKU_BASE);
-			   return;
-			}
-			else {
-				setcookie("DOKU_GOTO", $event->data['user'], time()+120, DOKU_BASE);
-			}
-        }
-	}
 }
