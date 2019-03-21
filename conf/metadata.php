@@ -13,4 +13,5 @@ $meta['auto_options'] = array('multichoice','_choices'=>array(':user_page',':use
 $meta['common_ns'] = array('string');
 $meta['group'] = array('string');
 $meta['group_options'] = array('multichoice','_choices'=>array('start_page','user_page'));
-
+$meta['group_only'] = array('onoff');
+$meta['user_only'] = array('onoff');
