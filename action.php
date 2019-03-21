@@ -19,8 +19,27 @@ class action_plugin_goto extends DokuWiki_Action_Plugin {
 		}
 	    $user = $_SERVER['REMOTE_USER'];
 		if(!$user) return;
-		$grps = $USERINFO['grps'];		
 		$auto_login = $this->getConf('auto_login');   
+		$redirect_target = "";
+		if($auto_login) {			   
+			$user_grps = $USERINFO['grps'];		
+			$groups = $this->getConf('group');
+			$groups = preg_replace("/\s+/","",$groups);
+			$groups = explode(',',$groups);
+		    $grp_opt = $this->getConf('group_options');
+			foreach($groups as $grp) {
+				if(in_array ($grp , $user_grps)) {
+					$redirect_target = "$grp:";
+					$redirect_target .= ($grp_opt == 'user_page' ? $user : $conf['start']);							
+                    break;					
+				}
+			}	
+			if($redirect_target) {
+				setcookie("GOTO_LOGIN", $redirect_target, time()+120, DOKU_BASE);		
+                return;				
+			}			
+		}			
+		//msg($redirect_target);	
 		
 		if($auto_login) {		       
 		   $option  = $this->getConf('auto_options');
