@@ -79,7 +79,7 @@ class  syntax_plugin_goto extends DokuWiki_Syntax_Plugin {
                     $urlArr = explode('#', $data[0], 2);
                     $url = wl($urlArr[0]);
                     if (count($urlArr) > 1) {
-                        $url .= '#'.$urlArr[1];
+					$url .= '#'.cleanID($urlArr[1]);			
                     }  
                 }                
 				if ($ACT != 'preview') {
