@@ -17,10 +17,14 @@ class action_plugin_goto extends DokuWiki_Action_Plugin {
 		 if($act != 'login') {
 				return;
 		}
-		$auto_login = $this->getConf('auto_login');	
-        if(!$auto_login) return;	
 	    $user = $_SERVER['REMOTE_USER'];
 		if(!$user) return;
+		$auto_login = $this->getConf('auto_login');	
+        if(!$auto_login) {       
+           setcookie("GOTO_LOGIN",":$user" , time()+120, DOKU_BASE);	  //setup user for possible ~~GOTO>user~~
+           return;	
+        }
+
 
         $which_only = $this->getConf('only_option');		
 		if($which_only == 'default') {
