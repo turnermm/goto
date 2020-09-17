@@ -7,7 +7,7 @@ function goto_redirect(which,mode) {
          location.href = which;
          return;
      }
-	 var user = goto_getCookie("DOKU_GOTO");      
+	 var user = goto_getCookie("GOTO_LOGIN");      
       if(!user) {
           return;
       }   	 
@@ -16,7 +16,7 @@ function goto_redirect(which,mode) {
        which = which.replace(/user/, user);
       }
       location.href = which;
-      setGotoCookie("DOKU_GOTO", "") ;
+      setGotoCookie("GOTO_LOGIN", "") ;
      
  
 }
