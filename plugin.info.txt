@@ -1,6 +1,6 @@
 base goto
-author Allen Ormond
-email aormond@gmail.com
+author Allen Ormond,cziehr, turnermm
+email turnermm02@shaw.ca
 date 2020-09-17
 name GOTO
 desc Easily redirect to other pages in your wiki.
