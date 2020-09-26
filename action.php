@@ -21,7 +21,6 @@ class action_plugin_goto extends DokuWiki_Action_Plugin {
 		if(!$user) return;
 		$auto_login = $this->getConf('auto_login');	
         if(!$auto_login) {       
-           setcookie("GOTO_LOGIN",":$user" , time()+120, DOKU_BASE);	  //setup user for possible ~~GOTO>user~~
            return;	
         }
 
@@ -57,7 +56,6 @@ class action_plugin_goto extends DokuWiki_Action_Plugin {
 			}			
 		}			
 			
-		//$groups_only = $this->getConf('group_only');
         if($groups_only)  return;
 	       
 		   $option  = $this->getConf('auto_options');

@@ -16,6 +16,7 @@ function goto_redirect(which,mode) {
        which = which.replace(/user/, user);
       }
       location.href = which;
+      clearTimeout(goto_tm);
       setGotoCookie("GOTO_LOGIN", "") ;
      
  
