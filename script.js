@@ -34,23 +34,20 @@ function setGotoCookie(cname, cvalue) {
 }
 
 jQuery( document ).ready(function() {
-      function __dom(id) {
-         return document.getElementById(id); 
-      }
+     if(JSINFO['update_version'] > 50) {
       var domval = window.document.getElementById("goto_go").innerHTML;
-      ar = domval.split(';');
-    //  alert(__dom("goto_go").innerHTML);
-	//  var ar = (__dom("goto_go").innerHTML).split(';');    
+          var ar = domval.split(';');   
       if(ar) {      
          var url = ar[0]; var delay = ar[1];
          setTimeout(function(){ location.href = url; }, delay,url);
          return;
+        }
       }
 	  var which = goto_getCookie("GOTO_LOGIN");      
   
       if(!which) {
           return;
       }   
-	    location.href = DOKU_BASE + 'doku.php?id=' + decodeURIComponent(which) ;
+	   location.href = DOKU_BASE + 'doku.php?id=' + decodeURIComponent(which) ;
 	   setGotoCookie("GOTO_LOGIN", "") ;
 });

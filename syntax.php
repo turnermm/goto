@@ -61,9 +61,10 @@ class  syntax_plugin_goto extends DokuWiki_Syntax_Plugin {
 				return array($matches[0], $seconds, $message,$is_usr,$is_extern);
 			}
 
-			function render($mode, Doku_Renderer $renderer, $data) {
+             function render($mode, Doku_Renderer $renderer, $data) {
                 if($mode != 'xhtml') return false;
-				global $ACT;
+                global $updateVersion;              
+                global $ACT;
                 $internal_link = false;
                 if(!$data[3]) {
                     if(!$data[4]) {
@@ -87,7 +88,12 @@ class  syntax_plugin_goto extends DokuWiki_Syntax_Plugin {
 				if ($ACT != 'preview') {
                     if(!$data[3] && !$data[4]) {
                         $tm= $data[1]*1000;
-				        $renderer->doc .= '<span id = "goto_go">'.$url .';'.$tm.'</span>';
+                        if($updateVersion > 50) {
+                            $renderer->doc .= '<span id = "goto_go">'.$url .';'.$tm.'</span>';
+                        }
+                        else {
+                            $renderer->doc .= "<script>var goto_tm= setTimeout(function(){goto_redirect('$url', '$data[4]');},$tm);</script>";
+                        }
                     }
 					else{
 				        $tm =($data[1]*1000);	                                            
